@@ -8,30 +8,42 @@ on:
 
 jobs:
   build:
+    name: Build Release APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      # دریافت پروژه
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-  uses: subosito/flutter-action@v2
-  with:
-    flutter-version: '3.35.6'
-    channel: 'stable'
-    cache: true
+      # نصب Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.6'
+          channel: stable
+          cache: true
 
-      - name: Flutter doctor
+      # نمایش نسخه‌ها برای بررسی
+      - name: Flutter Doctor
         run: flutter doctor -v
 
-      - name: Get dependencies
+      # پاک کردن فایل‌های قبلی
+      - name: Flutter Clean
+        run: flutter clean
+
+      # دریافت پکیج‌ها
+      - name: Flutter Pub Get
         run: flutter pub get
 
-      - name: Build APK
+      # ساخت APK
+      - name: Build Release APK
         run: flutter build apk --release
 
+      # قرار دادن APK در Artifacts
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: delivery-app-apk
+          name: delivery-app-release
           path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
