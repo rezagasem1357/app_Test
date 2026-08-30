@@ -12,7 +12,7 @@ dependencies:
 
   shared_preferences: ^2.2.2
   mobile_scanner: ^4.0.1
-  file_picker: ^6.1.1
+  file_picker: ^10.3.3
   excel: ^2.0.0
   url_launcher: ^6.2.5
   cupertino_icons: ^1.0.6
